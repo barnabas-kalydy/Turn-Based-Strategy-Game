@@ -1,13 +1,12 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.drawable.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 
 public class Skeleton extends Actor {
     public Skeleton(Cell cell) {
         super(cell);
     }
 
-    @Override
     public String getTileName() {
         return "skeleton";
     }

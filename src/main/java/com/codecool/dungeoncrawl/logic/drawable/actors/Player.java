@@ -1,6 +1,6 @@
-package com.codecool.dungeoncrawl.logic.actors;
+package com.codecool.dungeoncrawl.logic.drawable.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 
 public class Player extends Actor {
     public Player(Cell cell) {
