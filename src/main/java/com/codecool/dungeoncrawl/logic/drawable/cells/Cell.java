@@ -25,7 +25,7 @@ public class Cell implements Drawable {
         this.type = type;
     }
 
-    public TroopImpl getActor() {
+    public TroopImpl getTroop() {
         return troopImpl;
     }
 

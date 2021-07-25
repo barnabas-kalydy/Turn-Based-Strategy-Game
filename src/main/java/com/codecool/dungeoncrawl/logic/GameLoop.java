@@ -8,10 +8,15 @@ import com.codecool.dungeoncrawl.logic.tiles.Tiles;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GameLoop {
@@ -29,6 +34,14 @@ public class GameLoop {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(canvas);
 
+        Button passTurnButton = new Button("Current");
+        passTurnButton.setPrefSize(100, 20);
+        passTurnButton.setOnMouseClicked(this::passTurn);
+
+        HBox hbox = new HBox();
+        hbox.getChildren().add(passTurnButton);
+        borderPane.setBottom(hbox);
+
         Scene scene = new Scene(borderPane);
         scene.setOnKeyPressed(this::setKeyEvents);
         scene.setOnMouseClicked(this::setOnMouseClicked);
@@ -39,13 +52,21 @@ public class GameLoop {
         refresh();
     }
 
+    private void passTurn(MouseEvent mouseEvent) {
+        if(actualTurnPlayer.equals(map.getPlayer(0)))
+            actualTurnPlayer = map.getPlayer(1);
+        else
+            actualTurnPlayer = map.getPlayer(0);
+    }
+
 
     private void setOnMouseClicked(MouseEvent mouseEvent) {
         // getting data about the place where mouse click occured
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
-        Troop actor = map.getCell((int) x / 32, (int) y / 32).getActor();
-        String tileName = map.getCell((int) x / 32, (int) y / 32).getTileName();
+        Cell cell = map.getCell((int) x / 32, (int) y / 32);
+        Troop actor = cell.getTroop();
+        String tileName = cell.getTileName();
 
 
         actualTurnPlayer = map.getPlayer(0);
@@ -95,7 +116,7 @@ public class GameLoop {
     }
 
     private boolean freeToMove(Troop selectedTroop, int xDirection, int yDirection) {
-        return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getActor() == null
+        return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop() == null
                 && selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName() == "floor";
     }
 
@@ -107,8 +128,8 @@ public class GameLoop {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+                if (cell.getTroop() != null) {
+                    Tiles.drawTile(context, cell.getTroop(), x, y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }

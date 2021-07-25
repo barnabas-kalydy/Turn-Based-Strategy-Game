@@ -48,8 +48,10 @@ public class GameMap {
     }
 
     public void setSelectedTroop(Troop selectedTroop, Player actualPlayerTurn) {
-        if (selectedTroop.getPlayer().equals(actualPlayerTurn))
-            this.selectedTroop = selectedTroop;
+        if (selectedTroop != null) {
+            if (selectedTroop.getPlayer().equals(actualPlayerTurn))
+                this.selectedTroop = selectedTroop;
+        }
     }
 
     public Player getPlayer(int playerNumber) {
