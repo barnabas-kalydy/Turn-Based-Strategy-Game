@@ -1,12 +1,12 @@
 package com.codecool.dungeoncrawl.logic.drawable.cells;
 
 import com.codecool.dungeoncrawl.logic.drawable.Drawable;
-import com.codecool.dungeoncrawl.logic.drawable.actors.Actor;
+import com.codecool.dungeoncrawl.logic.drawable.troops.TroopImpl;
 import com.codecool.dungeoncrawl.logic.maps.GameMap;
 
 public class Cell implements Drawable {
     private CellType type;
-    private Actor actor;
+    private TroopImpl troopImpl;
     private GameMap gameMap;
     private int x, y;
 
@@ -25,16 +25,16 @@ public class Cell implements Drawable {
         this.type = type;
     }
 
-    public Actor getActor() {
-        return actor;
+    public TroopImpl getActor() {
+        return troopImpl;
     }
 
-    public void setActor(Actor actor) {
-        this.actor = actor;
+    public void setTroop(TroopImpl troopImpl) {
+        this.troopImpl = troopImpl;
     }
 
-    public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+    public Cell getNeighbor(int upperDistanceFromCell, int rightDistanceFromCell) {
+        return gameMap.getCell(x + upperDistanceFromCell, y + rightDistanceFromCell);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Tiles {
         tileMap.put("floor", new Tile(2, 0));
 
         // entities
-        tileMap.put("player", new Tile(27, 0));
+        tileMap.put("swordsman", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
     }
 

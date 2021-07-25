@@ -1,15 +1,21 @@
 package com.codecool.dungeoncrawl.logic.maps;
 
-import com.codecool.dungeoncrawl.logic.drawable.actors.Player;
+import com.codecool.dungeoncrawl.logic.Player;
 import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 import com.codecool.dungeoncrawl.logic.drawable.cells.CellType;
+import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameMap {
     private final int width;
     private final int height;
     private final Cell[][] cells;
 
-    private Player player;
+    private List<Player> players;
+
+    private Troop selectedTroop;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -20,18 +26,13 @@ public class GameMap {
                 cells[x][y] = new Cell(this, x, y, defaultCellType);
             }
         }
+        players = new ArrayList<>();
+        players.add(new Player("player 1"));
+        players.add(new Player("player 2"));
     }
 
     public Cell getCell(int x, int y) {
         return cells[x][y];
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public int getWidth() {
@@ -40,5 +41,17 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public Troop getSelectedTroop() {
+        return selectedTroop;
+    }
+
+    public void setSelectedTroop(Troop selectedTroop) {
+        this.selectedTroop = selectedTroop;
+    }
+
+    public Player getPlayer(int playerNumber) {
+        return players.get(playerNumber);
     }
 }
