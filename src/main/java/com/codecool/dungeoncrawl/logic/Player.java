@@ -7,9 +7,8 @@ import java.util.Map;
 
 public class Player {
 
-    private String playerId;
-
     private final Map<String, Troop> troops;
+    private String playerId;
 
     public Player(String playerId) {
         this.playerId = playerId;

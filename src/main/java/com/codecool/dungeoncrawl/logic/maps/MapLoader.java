@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.logic.maps;
 
-import com.codecool.dungeoncrawl.logic.drawable.troops.Swordsman;
-import com.codecool.dungeoncrawl.logic.drawable.troops.Skeleton;
 import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 import com.codecool.dungeoncrawl.logic.drawable.cells.CellType;
+import com.codecool.dungeoncrawl.logic.drawable.troops.Skeleton;
+import com.codecool.dungeoncrawl.logic.drawable.troops.Swordsman;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -38,6 +38,9 @@ public class MapLoader {
                         case '.':
                             // floor
                             cell.setType(CellType.FLOOR);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.HOUSE);
                             break;
 
                         //#####   ENTITIES    ########

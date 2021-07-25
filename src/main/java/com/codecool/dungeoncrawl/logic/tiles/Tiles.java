@@ -19,6 +19,9 @@ public class Tiles {
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));
+        tileMap.put("house", new Tile(4, 20));
+        tileMap.put("red_house", new Tile(1, 19));
+        tileMap.put("brown_house", new Tile(8, 20));
 
         // entities
         tileMap.put("swordsman", new Tile(27, 0));

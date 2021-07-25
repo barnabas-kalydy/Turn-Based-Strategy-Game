@@ -33,6 +33,7 @@ public abstract class TroopImpl implements Drawable, Troop {
         return health;
     }
 
+    @Override
     public Cell getCell() {
         return cell;
     }
@@ -48,5 +49,10 @@ public abstract class TroopImpl implements Drawable, Troop {
     @Override
     public String getId() {
         return troopId;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
     }
 }
