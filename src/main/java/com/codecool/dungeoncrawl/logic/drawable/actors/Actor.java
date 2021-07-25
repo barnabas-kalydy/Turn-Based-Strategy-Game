@@ -34,4 +34,12 @@ public abstract class Actor implements Drawable {
     public int getY() {
         return cell.getY();
     }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "cell=" + cell +
+                ", health=" + health +
+                '}';
+    }
 }
