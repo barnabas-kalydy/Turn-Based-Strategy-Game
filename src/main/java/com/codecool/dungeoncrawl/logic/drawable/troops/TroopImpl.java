@@ -55,4 +55,15 @@ public abstract class TroopImpl implements Drawable, Troop {
     public Player getPlayer() {
         return player;
     }
+
+    @Override
+    public void interactWith(Cell neighbor) {
+        // TODO continue here
+
+        // make interaction with city -> conquer the city
+
+        // make interaction with other players troop -> attack the troop
+
+        // todo implement new building method -> like build a shelter or something
+    }
 }

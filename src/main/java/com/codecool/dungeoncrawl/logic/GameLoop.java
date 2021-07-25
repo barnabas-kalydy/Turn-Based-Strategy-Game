@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
+import com.codecool.dungeoncrawl.logic.drawable.other_entities.Building;
 import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
 import com.codecool.dungeoncrawl.logic.maps.GameMap;
 import com.codecool.dungeoncrawl.logic.maps.MapLoader;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.maven.model.Build;
 
 public class GameLoop {
 
@@ -110,6 +112,10 @@ public class GameLoop {
                 case W -> {
                     if (freeToMove(selectedTroop, 0, -1))
                         selectedTroop.move(0, -1);
+                    else if(canInteractWith(selectedTroop, 0, -1))
+                        selectedTroop.interactWith(selectedTroop
+                                .getCell()
+                                .getNeighbor(0, -1));
                     refresh();
                 }
                 case S -> {
@@ -129,6 +135,20 @@ public class GameLoop {
                 }
             }
         }
+    }
+
+    private boolean canInteractWith(Troop selectedTroop, int xDirection, int yDirection) {
+        Building building = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getBuilding();
+        if(building != null) {
+            return true;
+        }
+        Troop troop = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop();
+        if(troop != null) {
+            if(!troop.getPlayer().equals(selectedTroop.getPlayer())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean freeToMove(Troop selectedTroop, int xDirection, int yDirection) {
