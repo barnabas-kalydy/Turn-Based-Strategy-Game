@@ -54,6 +54,10 @@ public class GameMap {
         }
     }
 
+    public void setSelectedTroopToNull() {
+        selectedTroop = null;
+    }
+
     public Player getPlayer(int playerNumber) {
         return players.get(playerNumber);
     }

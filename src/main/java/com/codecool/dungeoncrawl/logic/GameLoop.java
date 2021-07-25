@@ -10,13 +10,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GameLoop {
@@ -28,11 +28,11 @@ public class GameLoop {
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
-
+    VBox rightLogBox;
 
     public void start(Stage primaryStage) {
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(canvas);
+
+        canvas.setOnMouseClicked(this::setOnMouseClicked);
 
         Button passTurnButton = new Button("Current");
         passTurnButton.setPrefSize(100, 20);
@@ -40,23 +40,36 @@ public class GameLoop {
 
         HBox hbox = new HBox();
         hbox.getChildren().add(passTurnButton);
+
+        rightLogBox = new VBox();
+        rightLogBox.getChildren().add(new Hyperlink("Log output: "));
+
+        ScrollPane scroll = new ScrollPane();
+        scroll.setMinWidth(500);
+        scroll.setContent(rightLogBox);
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setOnKeyPressed(this::setKeyEvents);
+        borderPane.setCenter(canvas);
         borderPane.setBottom(hbox);
+        borderPane.setRight(scroll);
 
         Scene scene = new Scene(borderPane);
-        scene.setOnKeyPressed(this::setKeyEvents);
-        scene.setOnMouseClicked(this::setOnMouseClicked);
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        actualTurnPlayer = map.getPlayer(0);
 
         refresh();
     }
 
     private void passTurn(MouseEvent mouseEvent) {
-        if(actualTurnPlayer.equals(map.getPlayer(0)))
+        if (actualTurnPlayer.equals(map.getPlayer(0)))
             actualTurnPlayer = map.getPlayer(1);
         else
             actualTurnPlayer = map.getPlayer(0);
+        map.setSelectedTroopToNull();
     }
 
 
@@ -69,8 +82,11 @@ public class GameLoop {
         String tileName = cell.getTileName();
 
 
-        actualTurnPlayer = map.getPlayer(0);
         map.setSelectedTroop(actor, actualTurnPlayer);
+
+        logToVBox(String.valueOf(x));
+        logToVBox(String.valueOf(y));
+        logToVBox(actor.toString());
 
         // adding modal window with details of the place where mouse click occured
 //        VBox vBoxPane = new VBox();
@@ -135,5 +151,9 @@ public class GameLoop {
                 }
             }
         }
+    }
+
+    public void logToVBox(String log) {
+        rightLogBox.getChildren().add(new Hyperlink(log));
     }
 }
