@@ -30,7 +30,9 @@ public class Player {
         troops.put(troop.getId(), troop);
     }
 
-    public Map<String, ConqueredCity> getCities() { return cities;}
+    public Map<String, ConqueredCity> getCities() {
+        return cities;
+    }
 
     public ConqueredCity getCity(String cityId) {
         return cities.get(cityId);

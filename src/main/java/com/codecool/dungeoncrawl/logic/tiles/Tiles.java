@@ -15,17 +15,25 @@ public class Tiles {
 
     // initialize Tile types with names
     static {
-        // map elements
-        tileMap.put("empty", new Tile(0, 0));
-        tileMap.put("wall", new Tile(10, 17));
-        tileMap.put("floor", new Tile(2, 0));
-        tileMap.put("house", new Tile(4, 20));
-        tileMap.put("red_house", new Tile(1, 19));
-        tileMap.put("brown_house", new Tile(8, 20));
+        //////// map 2 tiles /////////////
+        tileMap.put("empty", new Tile(0));
+        tileMap.put("ground_1", new Tile(2));
+        tileMap.put("pine_tree_1", new Tile(32));
+        tileMap.put("pine_tree_2", new Tile(67));
+        tileMap.put("house_1", new Tile(644));
+        tileMap.put("house_2", new Tile(672));
+        tileMap.put("horse", new Tile(252));
+        tileMap.put("cow", new Tile(251));
+        tileMap.put("bridge_1", new Tile(176));
+        tileMap.put("bridge_2", new Tile(175));
+        tileMap.put("water_full", new Tile(168));
+        tileMap.put("water_corner", new Tile(170));
+        tileMap.put("boat_1", new Tile(619));
+        tileMap.put("torch_1", new Tile(484));
 
-        // entities
-        tileMap.put("swordsman", new Tile(27, 0));
-        tileMap.put("skeleton", new Tile(29, 6));
+        tileMap.put("swordsman", new Tile(28));
+        tileMap.put("skeleton", new Tile(26));
+
     }
 
     /**

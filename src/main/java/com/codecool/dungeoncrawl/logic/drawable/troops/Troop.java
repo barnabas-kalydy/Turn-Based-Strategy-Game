@@ -11,6 +11,4 @@ public interface Troop {
     Player getPlayer();
 
     Cell getCell();
-
-    void interactWith(Cell neighbor);
 }

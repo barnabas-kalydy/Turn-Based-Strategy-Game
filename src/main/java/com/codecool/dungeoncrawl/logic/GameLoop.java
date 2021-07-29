@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
-import com.codecool.dungeoncrawl.logic.drawable.other_entities.Building;
 import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
 import com.codecool.dungeoncrawl.logic.maps.GameMap;
 import com.codecool.dungeoncrawl.logic.maps.MapLoader;
@@ -19,13 +18,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.apache.maven.model.Build;
 
 public class GameLoop {
 
     Player actualTurnPlayer;
 
-    GameMap map = MapLoader.loadMap();
+    GameMap map = MapLoader.loadMapFromCsv(1);
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -86,9 +84,12 @@ public class GameLoop {
 
         map.setSelectedTroop(actor, actualTurnPlayer);
 
-        logToVBox(String.valueOf(x));
-        logToVBox(String.valueOf(y));
+        logToVBox("\n");
         logToVBox(actor.toString());
+        logToVBox(tileName);
+        logToVBox("Actual round player: " + actualTurnPlayer);
+        logToVBox("Owner of that troop: " + actor.getPlayer());
+        logToVBox(map.getSelectedTroop().toString());
 
         // adding modal window with details of the place where mouse click occured
 //        VBox vBoxPane = new VBox();
@@ -112,10 +113,6 @@ public class GameLoop {
                 case W -> {
                     if (freeToMove(selectedTroop, 0, -1))
                         selectedTroop.move(0, -1);
-                    else if(canInteractWith(selectedTroop, 0, -1))
-                        selectedTroop.interactWith(selectedTroop
-                                .getCell()
-                                .getNeighbor(0, -1));
                     refresh();
                 }
                 case S -> {
@@ -137,23 +134,9 @@ public class GameLoop {
         }
     }
 
-    private boolean canInteractWith(Troop selectedTroop, int xDirection, int yDirection) {
-        Building building = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getBuilding();
-        if(building != null) {
-            return true;
-        }
-        Troop troop = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop();
-        if(troop != null) {
-            if(!troop.getPlayer().equals(selectedTroop.getPlayer())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private boolean freeToMove(Troop selectedTroop, int xDirection, int yDirection) {
         return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop() == null
-                && selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName() == "floor";
+                && selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName() == "ground_1";
     }
 
     private void refresh() {
