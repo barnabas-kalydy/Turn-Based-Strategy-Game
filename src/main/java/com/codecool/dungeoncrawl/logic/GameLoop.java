@@ -89,7 +89,7 @@ public class GameLoop {
         Cell cell = map.getCell((int) x / 32, (int) y / 32);
         Troop troop = cell.getTroop();
 
-        if(troop != null)
+        if (troop != null)
             map.setSelectedTroop(troop, actualTurnPlayer);
         else
             map.setSelectedTroopToNull();
@@ -100,10 +100,10 @@ public class GameLoop {
         // logging to vbox
         clearVBox();
         logToVBox("\n");
-        logToVBox("Troop: " + (troop == null ? "null": troop.toString()));
+        logToVBox("Troop: " + (troop == null ? "null" : troop.toString()));
         logToVBox("Tile name: " + tileName);
         logToVBox("Actual round player: " + actualTurnPlayer);
-        logToVBox("Selected troop: " + (selectedTroop == null? "null": selectedTroop.toString()));
+        logToVBox("Selected troop: " + (selectedTroop == null ? "null" : selectedTroop.toString()));
     }
 
     private void setKeyEvents(KeyEvent keyEvent) {
@@ -130,11 +130,11 @@ public class GameLoop {
                     yDirection = 0;
                 }
             }
-            if(freeToMove(selectedTroop, xDirection, yDirection))
+            if (freeToMove(selectedTroop, xDirection, yDirection))
                 selectedTroop.move(xDirection, yDirection);
-            else if(canAttack(selectedTroop, xDirection, yDirection)) {
+            else if (canAttack(selectedTroop, xDirection, yDirection)) {
                 selectedTroop.attack(xDirection, yDirection);
-                if(selectedTroop.getHealth() < 1) {
+                if (selectedTroop.getHealth() < 1) {
                     logToVBox("Selected troop died!");
                     selectedTroop.getCell().setTroop(null);
                     selectedTroop.getPlayer().removeTroop(selectedTroop);
@@ -152,8 +152,8 @@ public class GameLoop {
 
     private boolean canAttack(Troop selectedTroop, int xDirection, int yDirection) {
         Troop troopToAttack = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop();
-        if(troopToAttack != null) {
-            if(!troopToAttack.getPlayer().equals(selectedTroop.getPlayer()))
+        if (troopToAttack != null) {
+            if (!troopToAttack.getPlayer().equals(selectedTroop.getPlayer()))
                 return true;
         }
         return false;
@@ -169,7 +169,16 @@ public class GameLoop {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
                 if (cell.getTroop() != null) {
+                    // draw troop to map
                     Tiles.drawTile(context, cell.getTroop(), x, y);
+
+                    // draw health bar under the troop
+                    Troop troop = cell.getTroop();
+                    context.setFill(troop.getPlayer().getColor());
+                    context.fillRect(cell.getX() * 32,
+                            cell.getY() * 32 + 29,
+                            32 * (troop.getHealth() / troop.getMaxHealth()),
+                            3);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }

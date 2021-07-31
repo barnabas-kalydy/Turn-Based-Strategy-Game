@@ -11,10 +11,11 @@ public interface Troop {
     void move(int dx, int dy);
     void attack(int xDirection, int yDirection);
 
-    int getDmg();
-    void setDmg(int dmg);
+    float getDmg();
+    void setDmg(float dmg);
 
-    int getHealth();
-    void setHealth(int health);
-    void loseHealth(int healthToLose);
+    float getHealth();
+    float getMaxHealth();
+    void setHealth(float health);
+    void loseHealth(float healthToLose);
 }

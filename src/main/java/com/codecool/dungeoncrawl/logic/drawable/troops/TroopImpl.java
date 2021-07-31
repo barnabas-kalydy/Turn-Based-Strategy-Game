@@ -6,14 +6,16 @@ import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 
 public abstract class TroopImpl implements Drawable, Troop {
     private Cell cell;
-    private int health = 10;
-    private int dmg = 3;
-    private Player player;
+    private float health = 10;
+    private float dmg = 3;
+    private final Player player;
+    private final float maxHealth;
 
-    public TroopImpl(Cell cell, Player player) {
+    public TroopImpl(Cell cell, Player player, float maxHealth) {
         this.cell = cell;
         this.cell.setTroop(this);
         this.player = player;
+        this.maxHealth = maxHealth;
         player.addTroop(this);
     }
 
@@ -39,17 +41,22 @@ public abstract class TroopImpl implements Drawable, Troop {
 
 
     @Override
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
     @Override
-    public void setHealth(int health) {
+    public float getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    @Override
+    public void setHealth(float health) {
         this.health = health;
     }
 
     @Override
-    public void loseHealth(int healthToLose) {
+    public void loseHealth(float healthToLose) {
         this.health -= healthToLose;
     }
 
@@ -72,12 +79,12 @@ public abstract class TroopImpl implements Drawable, Troop {
     }
 
     @Override
-    public int getDmg() {
+    public float getDmg() {
         return dmg;
     }
 
     @Override
-    public void setDmg(int dmg) {
+    public void setDmg(float dmg) {
         this.dmg = dmg;
     }
 }
