@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
 import javafx.scene.paint.Paint;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

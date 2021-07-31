@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.logic.drawable.cells.CellType;
 import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
 import javafx.scene.paint.Paint;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class GameMap {
 
     public void initPlayers() {
         players = new ArrayList<>();
-        players.add(new Player(Paint.valueOf("00ff00")));
+        players.add(new Player(Paint.valueOf("0000ff")));
         players.add(new Player(Paint.valueOf("ff0000")));
     }
 

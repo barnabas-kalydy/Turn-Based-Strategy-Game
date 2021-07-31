@@ -174,11 +174,16 @@ public class GameLoop {
 
                     // draw health bar under the troop
                     Troop troop = cell.getTroop();
-                    context.setFill(troop.getPlayer().getColor());
+                    context.setFill(Color.GREEN);
                     context.fillRect(cell.getX() * 32,
                             cell.getY() * 32 + 29,
                             32 * (troop.getHealth() / troop.getMaxHealth()),
                             3);
+                    context.setStroke(troop.getPlayer().getColor());
+                    context.strokeRect(cell.getX() * 32,
+                            cell.getY() * 32,
+                            32,
+                            32);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }

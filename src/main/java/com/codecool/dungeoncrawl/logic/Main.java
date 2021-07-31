@@ -30,7 +30,7 @@ public class Main extends Application {
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Error with playing sound.");
             e.printStackTrace();
         }

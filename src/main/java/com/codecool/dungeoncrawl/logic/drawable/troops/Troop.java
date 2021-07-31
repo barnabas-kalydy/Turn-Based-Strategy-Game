@@ -9,13 +9,18 @@ public interface Troop {
     Cell getCell();
 
     void move(int dx, int dy);
+
     void attack(int xDirection, int yDirection);
 
     float getDmg();
+
     void setDmg(float dmg);
 
     float getHealth();
-    float getMaxHealth();
+
     void setHealth(float health);
+
+    float getMaxHealth();
+
     void loseHealth(float healthToLose);
 }
