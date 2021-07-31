@@ -11,15 +11,14 @@ import java.util.Scanner;
 
 public class MapLoader {
 
+    static int mapWidth = 0;
+    static int mapHeight = 0;
+
     public static GameMap loadMapFromCsv(int mapNumber) {
-
-        // todo replace this with live width and height reading from csv file
-        int mapWidth = 30;
-        int mapHeight = 20;
-
-        GameMap map = new GameMap(mapWidth, mapHeight, CellType.EMPTY);
+        GameMap map;
         try {
-
+            readMapWidthAndHeightFromCsv(mapNumber);
+            map = new GameMap(mapWidth, mapHeight, CellType.EMPTY);
             Scanner sc = new Scanner(new File(
                     String.format("src/main/resources/maps/%d/map_%d.csv", mapNumber, mapNumber)));
             for (int y = 0; y < mapHeight; y++) {
@@ -74,8 +73,24 @@ public class MapLoader {
             sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            map = new GameMap(-1, -1, CellType.EMPTY);
         }
         return map;
     }
 
+    private static void readMapWidthAndHeightFromCsv(int mapNumber) throws FileNotFoundException {
+
+        String file = String.format("src/main/resources/maps/%d/map_%d.csv", mapNumber, mapNumber);
+        String line = "";
+        try (Scanner s =
+                     new Scanner(new File(file))) {
+            while (s.hasNext()) {
+                line = s.next();
+                mapHeight++;
+            }
+            mapWidth = line.split(",").length;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
