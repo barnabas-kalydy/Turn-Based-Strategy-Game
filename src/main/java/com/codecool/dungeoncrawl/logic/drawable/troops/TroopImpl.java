@@ -7,19 +7,14 @@ import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 public abstract class TroopImpl implements Drawable, Troop {
     private Cell cell;
     private int health = 10;
-    private String troopId;
+    private int dmg = 3;
     private Player player;
 
     public TroopImpl(Cell cell, Player player) {
         this.cell = cell;
         this.cell.setTroop(this);
-        troopId = getNewTroopId();
         this.player = player;
         player.addTroop(this);
-    }
-
-    public static String getNewTroopId() {
-        return String.valueOf(System.nanoTime());
     }
 
     @Override
@@ -30,8 +25,32 @@ public abstract class TroopImpl implements Drawable, Troop {
         cell = nextCell;
     }
 
+    @Override
+    public void attack(int xDirection, int yDirection) {
+        Troop troopToAttack = cell.getNeighbor(xDirection, yDirection).getTroop();
+        troopToAttack.loseHealth(this.getDmg());
+        if(troopToAttack.getHealth() < 1) {
+            troopToAttack.getCell().setTroop(null);
+            troopToAttack.getPlayer().removeTroop(troopToAttack);
+            return;
+        }
+        this.loseHealth(troopToAttack.getDmg());
+    }
+
+
+    @Override
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public void loseHealth(int healthToLose) {
+        this.health -= healthToLose;
     }
 
     @Override
@@ -48,13 +67,17 @@ public abstract class TroopImpl implements Drawable, Troop {
     }
 
     @Override
-    public String getId() {
-        return troopId;
-    }
-
-    @Override
     public Player getPlayer() {
         return player;
     }
 
+    @Override
+    public int getDmg() {
+        return dmg;
+    }
+
+    @Override
+    public void setDmg(int dmg) {
+        this.dmg = dmg;
+    }
 }

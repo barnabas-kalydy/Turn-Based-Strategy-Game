@@ -42,8 +42,13 @@ public class GameLoop {
         passTurnButton.setPrefSize(100, 20);
         passTurnButton.setOnMouseClicked(this::passTurn);
 
+        Button clearLogBoxButton = new Button("Clear Right Log Box!");
+        clearLogBoxButton.setPrefSize(200, 20);
+        clearLogBoxButton.setOnMouseClicked(this::clearVBoxEvent);
+
         HBox hbox = new HBox();
         hbox.getChildren().add(passTurnButton);
+        hbox.getChildren().add(clearLogBoxButton);
 
         rightLogBox = new VBox();
         rightLogBox.getChildren().add(new Hyperlink("Log output: "));
@@ -93,6 +98,7 @@ public class GameLoop {
         String tileName = cell.getTileName();
 
         // logging to vbox
+        clearVBox();
         logToVBox("\n");
         logToVBox("Troop: " + (troop == null ? "null": troop.toString()));
         logToVBox("Tile name: " + tileName);
@@ -103,34 +109,54 @@ public class GameLoop {
     private void setKeyEvents(KeyEvent keyEvent) {
         Troop selectedTroop = map.getSelectedTroop();
         if (selectedTroop != null) {
+            // 0, 0 -> not move
+            int xDirection = 0;
+            int yDirection = 0;
             switch (keyEvent.getCode()) {
                 case W -> {
-                    if (freeToMove(selectedTroop, 0, -1))
-                        selectedTroop.move(0, -1);
-                    refresh();
+                    xDirection = 0;
+                    yDirection = -1;
                 }
                 case S -> {
-                    if (freeToMove(selectedTroop, 0, 1))
-                        selectedTroop.move(0, 1);
-                    refresh();
+                    xDirection = 0;
+                    yDirection = 1;
                 }
                 case A -> {
-                    if (freeToMove(selectedTroop, -1, 0))
-                        selectedTroop.move(-1, 0);
-                    refresh();
+                    xDirection = -1;
+                    yDirection = 0;
                 }
                 case D -> {
-                    if (freeToMove(selectedTroop, 1, 0))
-                        selectedTroop.move(1, 0);
-                    refresh();
+                    xDirection = 1;
+                    yDirection = 0;
                 }
             }
+            if(freeToMove(selectedTroop, xDirection, yDirection))
+                selectedTroop.move(xDirection, yDirection);
+            else if(canAttack(selectedTroop, xDirection, yDirection)) {
+                selectedTroop.attack(xDirection, yDirection);
+                if(selectedTroop.getHealth() < 1) {
+                    logToVBox("Selected troop died!");
+                    selectedTroop.getCell().setTroop(null);
+                    selectedTroop.getPlayer().removeTroop(selectedTroop);
+                    map.setSelectedTroopToNull();
+                }
+            }
+            refresh();
         }
     }
 
     private boolean freeToMove(Troop selectedTroop, int xDirection, int yDirection) {
         return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop() == null
                 && movableCellTypes.contains(selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName());
+    }
+
+    private boolean canAttack(Troop selectedTroop, int xDirection, int yDirection) {
+        Troop troopToAttack = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop();
+        if(troopToAttack != null) {
+            if(!troopToAttack.getPlayer().equals(selectedTroop.getPlayer()))
+                return true;
+        }
+        return false;
     }
 
     private void refresh() {
@@ -154,4 +180,14 @@ public class GameLoop {
     public void logToVBox(String log) {
         rightLogBox.getChildren().add(new Hyperlink(log));
     }
+
+    public void clearVBoxEvent(MouseEvent event) {
+        clearVBox();
+    }
+
+    public void clearVBox() {
+        rightLogBox.getChildren().clear();
+    }
+
+
 }

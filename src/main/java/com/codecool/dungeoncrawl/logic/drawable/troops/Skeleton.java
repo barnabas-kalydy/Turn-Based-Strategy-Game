@@ -6,6 +6,8 @@ import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
 public class Skeleton extends TroopImpl {
     public Skeleton(Cell cell, Player player) {
         super(cell, player);
+        setHealth(8);
+        setDmg(3);
     }
 
     public String getTileName() {
