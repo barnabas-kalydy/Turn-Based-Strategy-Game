@@ -1,10 +1,6 @@
 package com.codecool.dungeoncrawl.logic.drawable.cells;
 
 public enum CellType {
-//    EMPTY("empty"),
-//    FLOOR("floor"),
-//    WALL("wall"),
-//    HOUSE("house");
 
     EMPTY("empty"),
     GROUND_1("ground_1"),

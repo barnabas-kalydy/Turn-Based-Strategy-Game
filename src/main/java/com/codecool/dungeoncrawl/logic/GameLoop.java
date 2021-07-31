@@ -82,22 +82,22 @@ public class GameLoop {
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
         Cell cell = map.getCell((int) x / 32, (int) y / 32);
-        Troop actor = cell.getTroop();
-        String tileName = cell.getTileName();
+        Troop troop = cell.getTroop();
 
-
-        if(actor != null)
-            map.setSelectedTroop(actor, actualTurnPlayer);
+        if(troop != null)
+            map.setSelectedTroop(troop, actualTurnPlayer);
         else
             map.setSelectedTroopToNull();
-        
+
+        Troop selectedTroop = map.getSelectedTroop();
+        String tileName = cell.getTileName();
+
         // logging to vbox
         logToVBox("\n");
-        logToVBox(actor.toString());
-        logToVBox(tileName);
+        logToVBox("Troop: " + (troop == null ? "null": troop.toString()));
+        logToVBox("Tile name: " + tileName);
         logToVBox("Actual round player: " + actualTurnPlayer);
-        logToVBox("Owner of that troop: " + actor.getPlayer());
-        logToVBox(map.getSelectedTroop().toString());
+        logToVBox("Selected troop: " + (selectedTroop == null? "null": selectedTroop.toString()));
     }
 
     private void setKeyEvents(KeyEvent keyEvent) {
@@ -137,6 +137,7 @@ public class GameLoop {
         // filling screen with black
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
         // redrawing every Tile
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {

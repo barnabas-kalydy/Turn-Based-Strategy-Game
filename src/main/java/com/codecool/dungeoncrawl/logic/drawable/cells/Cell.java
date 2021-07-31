@@ -1,14 +1,12 @@
 package com.codecool.dungeoncrawl.logic.drawable.cells;
 
 import com.codecool.dungeoncrawl.logic.drawable.Drawable;
-import com.codecool.dungeoncrawl.logic.drawable.other_entities.Building;
 import com.codecool.dungeoncrawl.logic.drawable.troops.TroopImpl;
 import com.codecool.dungeoncrawl.logic.maps.GameMap;
 
 public class Cell implements Drawable {
     private CellType type;
     private TroopImpl troopImpl;
-    private Building building;
     private GameMap gameMap;
     private int x, y;
 
@@ -50,13 +48,5 @@ public class Cell implements Drawable {
 
     public int getY() {
         return y;
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
     }
 }

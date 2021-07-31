@@ -13,6 +13,7 @@ public class MapLoader {
 
     public static GameMap loadMapFromCsv(int mapNumber) {
 
+        // todo replace this with live width and height reading from csv file
         int mapWidth = 30;
         int mapHeight = 20;
 
