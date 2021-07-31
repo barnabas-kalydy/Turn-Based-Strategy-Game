@@ -10,10 +10,8 @@ public class Player {
 
     private final Map<String, Troop> troops;
     private final Map<String, ConqueredCity> cities;
-    private String playerId;
 
-    public Player(String playerId) {
-        this.playerId = playerId;
+    public Player() {
         troops = new HashMap<>();
         cities = new HashMap<>();
     }

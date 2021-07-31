@@ -19,9 +19,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class GameLoop {
 
     Player actualTurnPlayer;
+    List<String> movableCellTypes = Arrays.asList("ground_1", "bridge_1");
 
     GameMap map = MapLoader.loadMapFromCsv(1);
     Canvas canvas = new Canvas(
@@ -34,7 +38,7 @@ public class GameLoop {
 
         canvas.setOnMouseClicked(this::setOnMouseClicked);
 
-        Button passTurnButton = new Button("Current");
+        Button passTurnButton = new Button("Pass Turn!");
         passTurnButton.setPrefSize(100, 20);
         passTurnButton.setOnMouseClicked(this::passTurn);
 
@@ -82,28 +86,18 @@ public class GameLoop {
         String tileName = cell.getTileName();
 
 
-        map.setSelectedTroop(actor, actualTurnPlayer);
-
+        if(actor != null)
+            map.setSelectedTroop(actor, actualTurnPlayer);
+        else
+            map.setSelectedTroopToNull();
+        
+        // logging to vbox
         logToVBox("\n");
         logToVBox(actor.toString());
         logToVBox(tileName);
         logToVBox("Actual round player: " + actualTurnPlayer);
         logToVBox("Owner of that troop: " + actor.getPlayer());
         logToVBox(map.getSelectedTroop().toString());
-
-        // adding modal window with details of the place where mouse click occured
-//        VBox vBoxPane = new VBox();
-//        vBoxPane.getChildren().add(new Hyperlink("Click X coordinate: " + x));
-//        vBoxPane.getChildren().add(new Hyperlink("Click Y coordinate: " + y));
-//        vBoxPane.getChildren().add(new Hyperlink("cell.getActor(): " + actor));
-//        vBoxPane.getChildren().add(new Hyperlink("cell.getTileName(): " + tileName));
-//
-//        Stage dialog = new Stage();
-//        dialog.initModality(Modality.APPLICATION_MODAL);
-//        dialog.setWidth(600);
-//        dialog.setHeight(500);
-//        dialog.setScene(new Scene(vBoxPane));
-//        dialog.showAndWait();
     }
 
     private void setKeyEvents(KeyEvent keyEvent) {
@@ -136,7 +130,7 @@ public class GameLoop {
 
     private boolean freeToMove(Troop selectedTroop, int xDirection, int yDirection) {
         return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop() == null
-                && selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName() == "ground_1";
+                && movableCellTypes.contains(selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName());
     }
 
     private void refresh() {

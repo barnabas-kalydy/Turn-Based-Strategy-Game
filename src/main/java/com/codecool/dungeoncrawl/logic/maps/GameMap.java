@@ -11,7 +11,7 @@ import java.util.List;
 public class GameMap {
     private final int width;
     private final int height;
-    private final Cell[][] cells;
+    private Cell[][] cells;
 
     private List<Player> players;
 
@@ -20,15 +20,25 @@ public class GameMap {
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
         this.height = height;
+
+        initCells(defaultCellType);
+
+        initPlayers();
+    }
+
+    private void initCells(CellType defaultCellType) {
         cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 cells[x][y] = new Cell(this, x, y, defaultCellType);
             }
         }
+    }
+
+    public void initPlayers() {
         players = new ArrayList<>();
-        players.add(new Player("player 1"));
-        players.add(new Player("player 2"));
+        players.add(new Player());
+        players.add(new Player());
     }
 
     public Cell getCell(int x, int y) {
