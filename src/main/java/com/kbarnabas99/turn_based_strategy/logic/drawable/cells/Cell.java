@@ -8,8 +8,8 @@ import com.kbarnabas99.turn_based_strategy.logic.maps.GameMap;
 public class Cell implements Drawable {
     private CellType type;
     private TroopImpl troopImpl;
-    private GameMap gameMap;
-    private int x, y;
+    private final GameMap gameMap;
+    private final int x, y;
 
     public Cell(GameMap gameMap, int x, int y, CellType type) {
         this.gameMap = gameMap;

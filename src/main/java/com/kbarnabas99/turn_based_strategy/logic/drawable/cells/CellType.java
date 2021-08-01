@@ -13,7 +13,8 @@ public enum CellType {
     WATER_FULL("water_full"),
     WATER_CORNER("water_corner"),
     BOAT_1("boat_1"),
-    TORCH_1("torch_1");
+    TORCH_1("torch_1"),
+    CAT("cat");
 
     private final String tileName;
 

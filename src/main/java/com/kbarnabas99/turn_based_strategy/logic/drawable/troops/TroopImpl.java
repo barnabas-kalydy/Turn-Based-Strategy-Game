@@ -7,10 +7,9 @@ import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 
 public abstract class TroopImpl implements Drawable, Troop {
     private final Player player;
-    private final float maxHealth;
     private Cell cell;
-    private float health = 10;
-    private float dmg = 3;
+    private float health = 10, dmg = 3;
+    private final float maxHealth;
 
     public TroopImpl(Cell cell, Player player, float maxHealth) {
         this.cell = cell;

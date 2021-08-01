@@ -11,19 +11,17 @@ public class Tiles {
     private static final Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
 
     public static int TILE_WIDTH = 32; // in pixels
-    private static Map<String, Tile> tileMap = new HashMap<>();
+    private static final Map<String, Tile> tileMap = new HashMap<>();
 
     // initialize Tile types with names
     static {
-        //////// map 2 tiles /////////////
+        // map elements
         tileMap.put("empty", new Tile(0));
         tileMap.put("ground_1", new Tile(2));
         tileMap.put("pine_tree_1", new Tile(32));
         tileMap.put("pine_tree_2", new Tile(67));
         tileMap.put("house_1", new Tile(644));
         tileMap.put("house_2", new Tile(672));
-        tileMap.put("horse", new Tile(252));
-        tileMap.put("cow", new Tile(251));
         tileMap.put("bridge_1", new Tile(176));
         tileMap.put("bridge_2", new Tile(175));
         tileMap.put("water_full", new Tile(168));
@@ -31,9 +29,12 @@ public class Tiles {
         tileMap.put("boat_1", new Tile(619));
         tileMap.put("torch_1", new Tile(484));
 
+        // troops/entities/animals
         tileMap.put("swordsman", new Tile(28));
         tileMap.put("skeleton", new Tile(26));
-
+        tileMap.put("horse", new Tile(252));
+        tileMap.put("cat", new Tile(254));
+        tileMap.put("cow", new Tile(251));
     }
 
     /**

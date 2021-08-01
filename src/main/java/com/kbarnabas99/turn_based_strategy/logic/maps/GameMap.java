@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
-    private final int width;
-    private final int height;
+    private final int width, height;
     private Cell[][] cells;
 
     private List<Player> players;
@@ -39,7 +38,7 @@ public class GameMap {
     private void initPlayers() {
         players = new ArrayList<>();
         players.add(new Player(Paint.valueOf("0000ff")));
-        players.add(new Player(Paint.valueOf("ff0000")));
+        players.add(new Player(Paint.valueOf("FF0000")));
     }
 
     public Cell getCell(int x, int y) {
@@ -58,7 +57,7 @@ public class GameMap {
         return selectedTroop;
     }
 
-    public void setSelectedTroop(TroopImpl   selectedTroop, Player actualPlayerTurn) {
+    public void setSelectedTroop(TroopImpl selectedTroop, Player actualPlayerTurn) {
         if (selectedTroop != null) {
             if (selectedTroop.getPlayer().equals(actualPlayerTurn))
                 this.selectedTroop = selectedTroop;

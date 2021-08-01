@@ -5,8 +5,7 @@ import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 
 public class Skeleton extends TroopImpl {
 
-    static final float MAX_HEALTH = 10;
-    static final float BASE_DMG = 3;
+    static final float MAX_HEALTH = 10, BASE_DMG = 3;
 
     public Skeleton(Cell cell, Player player) {
         super(cell, player, Skeleton.MAX_HEALTH);

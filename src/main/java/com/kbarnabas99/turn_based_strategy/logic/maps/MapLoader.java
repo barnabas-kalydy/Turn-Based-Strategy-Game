@@ -58,6 +58,8 @@ public class MapLoader {
                         case "torch_1" -> {
                             cell.setType(CellType.TORCH_1);
                         }
+                        case "cat" ->
+                                cell.setType(CellType.CAT);
                         case "swordsman" -> {
                             cell.setType(CellType.GROUND_1);
                             new Swordsman(cell, map.getPlayer(0));
@@ -65,6 +67,9 @@ public class MapLoader {
                         case "skeleton" -> {
                             cell.setType(CellType.GROUND_1);
                             new Skeleton(cell, map.getPlayer(1));
+                        }
+                        default -> {
+                            System.out.println("Cell type " + line[x] + " not found!!!");
                         }
                     }
                 }

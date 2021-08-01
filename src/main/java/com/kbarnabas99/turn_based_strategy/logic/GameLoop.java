@@ -87,8 +87,8 @@ public class GameLoop {
 
     private void setMouseClickEventOnMainScreen(MouseEvent mouseEvent) {
         // getting data about the place where mouse click occured
-        double x = mouseEvent.getX();
-        double y = mouseEvent.getY();
+        double x = mouseEvent.getX(), y = mouseEvent.getY();
+
         Cell cell = map.getCell((int) x / 32, (int) y / 32);
         TroopImpl troop = cell.getTroop();
 
@@ -113,8 +113,8 @@ public class GameLoop {
         TroopImpl selectedTroop = map.getSelectedTroop();
         if (selectedTroop != null) {
             // 0, 0 -> not move
-            int xDirection = 0;
-            int yDirection = 0;
+            int xDirection = 0, yDirection = 0;
+            // set direction
             switch (keyEvent.getCode()) {
                 case W -> {
                     xDirection = 0;
@@ -182,6 +182,8 @@ public class GameLoop {
                             cell.getY() * 32 + 29,
                             32 * (troop.getHealth() / troop.getMaxHealth()),
                             3);
+
+                    // draw player color rectangle
                     context.setStroke(troop.getPlayer().getColor());
                     context.strokeRect(cell.getX() * 32,
                             cell.getY() * 32,
