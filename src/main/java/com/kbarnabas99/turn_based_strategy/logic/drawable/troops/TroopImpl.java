@@ -30,7 +30,7 @@ public abstract class TroopImpl implements Drawable, Troop {
 
     @Override
     public void attack(int xDirection, int yDirection) {
-        Troop troopToAttack = cell.getNeighbor(xDirection, yDirection).getTroop();
+        TroopImpl troopToAttack = cell.getNeighbor(xDirection, yDirection).getTroop();
         troopToAttack.loseHealth(this.getDmg());
         if (troopToAttack.getHealth() < 1) {
             troopToAttack.getCell().setTroop(null);

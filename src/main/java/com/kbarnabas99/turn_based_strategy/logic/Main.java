@@ -23,6 +23,7 @@ public class Main extends Application {
     }
 
     private void playMainSong() {
+        // FIXME: the music dont play
         try {
             AudioInputStream audioInputStream = AudioSystem
                     .getAudioInputStream(new File("src/main/resources/music/aoe3_theme_song.wav")
