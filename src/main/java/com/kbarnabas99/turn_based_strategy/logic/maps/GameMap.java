@@ -4,6 +4,7 @@ import com.kbarnabas99.turn_based_strategy.logic.Player;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.CellType;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Troop;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.TroopImpl;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class GameMap {
 
     private List<Player> players;
 
-    private Troop selectedTroop;
+    private TroopImpl selectedTroop;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -54,11 +55,11 @@ public class GameMap {
         return height;
     }
 
-    public Troop getSelectedTroop() {
+    public TroopImpl getSelectedTroop() {
         return selectedTroop;
     }
 
-    public void setSelectedTroop(Troop selectedTroop, Player actualPlayerTurn) {
+    public void setSelectedTroop(TroopImpl selectedTroop, Player actualPlayerTurn) {
         if (selectedTroop != null) {
             if (selectedTroop.getPlayer().equals(actualPlayerTurn))
                 this.selectedTroop = selectedTroop;

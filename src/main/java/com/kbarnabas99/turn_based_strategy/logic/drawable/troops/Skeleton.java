@@ -14,6 +14,7 @@ public class Skeleton extends TroopImpl {
         setDmg(Skeleton.BASE_DMG);
     }
 
+    @Override
     public String getTileName() {
         return "skeleton";
     }

@@ -2,6 +2,7 @@ package com.kbarnabas99.turn_based_strategy.logic;
 
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Troop;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.TroopImpl;
 import com.kbarnabas99.turn_based_strategy.logic.maps.GameMap;
 import com.kbarnabas99.turn_based_strategy.logic.maps.MapLoader;
 import com.kbarnabas99.turn_based_strategy.logic.tiles.Tiles;
@@ -24,10 +25,12 @@ import java.util.List;
 
 public class GameLoop {
 
-    Player actualTurnPlayer;
-    List<String> movableCellTypes = Arrays.asList("ground_1", "bridge_1");
+    // todo export this somewhere else
+    final List<String> movableCellTypes = Arrays.asList("ground_1", "bridge_1");
 
+    Player actualTurnPlayer;
     GameMap map = MapLoader.loadMapFromCsv(1);
+
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -36,7 +39,7 @@ public class GameLoop {
 
     public void start(Stage primaryStage) {
 
-        canvas.setOnMouseClicked(this::setOnMouseClicked);
+        canvas.setOnMouseClicked(this::setMouseClickEventOnMainScreen);
 
         Button passTurnButton = new Button("Pass Turn!");
         passTurnButton.setPrefSize(100, 20);
@@ -82,19 +85,19 @@ public class GameLoop {
     }
 
 
-    private void setOnMouseClicked(MouseEvent mouseEvent) {
+    private void setMouseClickEventOnMainScreen(MouseEvent mouseEvent) {
         // getting data about the place where mouse click occured
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
         Cell cell = map.getCell((int) x / 32, (int) y / 32);
-        Troop troop = cell.getTroop();
+        TroopImpl troop = cell.getTroop();
 
         if (troop != null)
             map.setSelectedTroop(troop, actualTurnPlayer);
         else
             map.setSelectedTroopToNull();
 
-        Troop selectedTroop = map.getSelectedTroop();
+        TroopImpl selectedTroop = map.getSelectedTroop();
         String tileName = cell.getTileName();
 
         // logging to vbox
@@ -107,7 +110,7 @@ public class GameLoop {
     }
 
     private void setKeyEvents(KeyEvent keyEvent) {
-        Troop selectedTroop = map.getSelectedTroop();
+        TroopImpl selectedTroop = map.getSelectedTroop();
         if (selectedTroop != null) {
             // 0, 0 -> not move
             int xDirection = 0;

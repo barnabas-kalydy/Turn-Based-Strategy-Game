@@ -18,7 +18,7 @@ public class Cell implements Drawable {
         this.type = type;
     }
 
-    public CellType getType() {
+    public CellType getCellType() {
         return type;
     }
 

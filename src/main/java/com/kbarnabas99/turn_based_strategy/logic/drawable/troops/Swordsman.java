@@ -14,6 +14,7 @@ public class Swordsman extends TroopImpl {
         setDmg(Swordsman.BASE_DMG);
     }
 
+    @Override
     public String getTileName() {
         return "swordsman";
     }
