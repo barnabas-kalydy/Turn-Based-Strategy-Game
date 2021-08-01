@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/dungeon-crawl.iml" filepath="$PROJECT_DIR$/dungeon-crawl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/turn-based-strategy-game.iml" filepath="$PROJECT_DIR$/turn-based-strategy-game.iml" />
     </modules>
   </component>
 </project>

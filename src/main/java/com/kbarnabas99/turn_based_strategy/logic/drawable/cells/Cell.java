@@ -1,8 +1,9 @@
-package com.codecool.dungeoncrawl.logic.drawable.cells;
+package com.kbarnabas99.turn_based_strategy.logic.drawable.cells;
 
-import com.codecool.dungeoncrawl.logic.drawable.Drawable;
-import com.codecool.dungeoncrawl.logic.drawable.troops.TroopImpl;
-import com.codecool.dungeoncrawl.logic.maps.GameMap;
+
+import com.kbarnabas99.turn_based_strategy.logic.drawable.Drawable;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.TroopImpl;
+import com.kbarnabas99.turn_based_strategy.logic.maps.GameMap;
 
 public class Cell implements Drawable {
     private CellType type;

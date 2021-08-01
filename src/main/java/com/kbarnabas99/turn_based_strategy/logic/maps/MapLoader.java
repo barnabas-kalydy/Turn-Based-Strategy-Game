@@ -1,9 +1,9 @@
-package com.codecool.dungeoncrawl.logic.maps;
+package com.kbarnabas99.turn_based_strategy.logic.maps;
 
-import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
-import com.codecool.dungeoncrawl.logic.drawable.cells.CellType;
-import com.codecool.dungeoncrawl.logic.drawable.troops.Skeleton;
-import com.codecool.dungeoncrawl.logic.drawable.troops.Swordsman;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.CellType;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Skeleton;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Swordsman;
 
 import java.io.File;
 import java.io.FileNotFoundException;

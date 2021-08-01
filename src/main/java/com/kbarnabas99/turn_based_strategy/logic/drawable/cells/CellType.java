@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.drawable.cells;
+package com.kbarnabas99.turn_based_strategy.logic.drawable.cells;
 
 public enum CellType {
 

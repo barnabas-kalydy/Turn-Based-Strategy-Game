@@ -1,9 +1,10 @@
-package com.codecool.dungeoncrawl.logic.tiles;
+package com.kbarnabas99.turn_based_strategy.logic.tiles;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.codecool.dungeoncrawl.logic.tiles.Tiles.TILE_WIDTH;
+import static com.kbarnabas99.turn_based_strategy.logic.tiles.Tiles.TILE_WIDTH;
+
 
 public class Tile {
 
