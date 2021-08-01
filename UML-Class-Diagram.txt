@@ -1,0 +1,142 @@
+@startuml
+class App {
+public static void main()
+}
+
+App --> Main: calls Main.main()
+class Main <<Application>> {
++ void start(Stage primaryStage)
+- void playMainSong()
+}
+
+Main --> Gameloop: calls Gameloop.start()
+Gameloop --> Tiles: uses
+Gameloop --> MapLoader: calls MapLoader.loadMapFromCsv(int mapNumber)
+class Gameloop {
++actualTurnPlayer: Player
++map: GameMap
++start(): void
+-passTurn(): void
+-setMouseClickEventOnMainScreen(): void
+-setKeyEvents(): void
+-freeToMove(): boolean
+-canAttack(): boolean
+-refresh(): void
+}
+
+Player "1" --> "*" TroopImpl: owns
+class Player {
+-troops: List<Troop>
+-playerColor: Paint
++getTroops(): List<Troop>
++addTroop(Troop troop): void
++removeTroop(Troop troop): void
++getColor(): Paint
+}
+
+interface Drawable {
+getTileName(): String
+}
+
+Cell "1" --* "1" CellType: has a
+Cell "1" --> "1" TroopImpl: has a
+class Cell implements Drawable {
+-type: CellType
+-troopImpl: TroopImpl
+-gameMap: GameMap
++getCellType(): CellType
++setType(CellType type): void
++getTroop(): TroopImpl
++setTroop(TroopImpl troopImpl): void
++getNeighbor(int upperDistanceFromCell, int rightDistanceFromCell): Cell
++getX(): int
++getY(): int
+}
+
+enum CellType {
+EMPTY("empty")
+GROUND_1("ground_1")
+PINE_TREE_1("pine_tree_1")
+PINE_TREE_2("pine_tree_2")
+HOUSE_1("house_1")
+HOUSE_2("house_2")
+BRIDGE_1("bridge_1")
+BRIDGE_2("bridge_2")
+WATER_FULL("water_full")
+WATER_CORNER("water_corner")
+BOAT_1("boat_1")
+TORCH_1("torch_1")
+}
+
+Tiles "1" --* "*" Tile: has
+class Tiles {
+-tileset: Image
+-{static} TILE_WIDTH: int
+-tileMap: Map<String, Tile>
++{static} drawTile(GraphicsContext context, Drawable drawable, int x, int y): void
+}
+
+class Tile {
+-x, y, width, height: int
+}
+
+GameMap "1" --> "*" Cell: has
+GameMap "1" --> "*" Player: has
+class GameMap {
+-width, height: int
+-cells: Cell[][]
+-players: List<Player>
+-selectedTroop: TroopImpl
+-initCells(CellType defaultCellType): void
+-initPlayers(): void
++getCell(int x, int y): Cell
++getWidth(): int
++getHeight(): int
++getSelectedTroop(): TroopImpl
++setSelectedTroop(TroopImpl   selectedTroop, Player actualPlayerTurn): void
++setSelectedTroopToNull(): void
++getPlayer(int playerNumber): Player
+}
+
+MapLoader --> GameMap: loads
+class MapLoader {
+{static} mapWidth, mapHeight: int
++{static} loadMapFromCsv(int mapNumber): GameMap
+-{static} readMapWidthAndHeightFromCsv(int mapNumber): void
+}
+
+interface Troop {
++getPlayer(): Player
++getCell(): Cell
++move(int dx, int dy): void
++attack(int xDirection, int yDirection): void
++getDmg(): float
++setDmg(float dmg): void
++getHealth(): float
++setHealth(float health): void
++getMaxHealth(): float
++loseHealth(float healthToLose): void
+}
+
+TroopImpl "1" --> "1" Player: has a
+TroopImpl "1" --> "1" Cell: has a
+abstract class TroopImpl implements Drawable, Troop {
+-player: Player
+-maxHealth: float
+-cell: Cell
+-health: float
+-dmg: float
++getX(): int
++getY(): int
+}
+
+class Skeleton extends TroopImpl {
+{static} MAX_HEALTH: float
+{static} BASE_DMG: float
+}
+
+class Swordsman extends TroopImpl {
+{static} MAX_HEALTH: float
+{static} BASE_DMG: float
+}
+@enduml

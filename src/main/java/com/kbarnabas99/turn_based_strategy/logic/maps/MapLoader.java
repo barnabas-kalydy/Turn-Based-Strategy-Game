@@ -11,8 +11,7 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    static int mapWidth = 0;
-    static int mapHeight = 0;
+    static int mapWidth = 0, mapHeight = 0;
 
     public static GameMap loadMapFromCsv(int mapNumber) {
         GameMap map;

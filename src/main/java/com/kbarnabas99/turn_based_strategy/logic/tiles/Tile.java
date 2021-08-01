@@ -8,7 +8,7 @@ import static com.kbarnabas99.turn_based_strategy.logic.tiles.Tiles.TILE_WIDTH;
 
 public class Tile {
 
-    public final int x, y, width, height;
+    private final int x, y, width, height;
 
     Tile(int coordinateNumber) {
         List<Integer> coordinates = calcCoordinates(coordinateNumber);
@@ -26,5 +26,21 @@ public class Tile {
         coordinates.add(coordinateInTiled % 32);
         coordinates.add(coordinateInTiled / 32);
         return coordinates;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

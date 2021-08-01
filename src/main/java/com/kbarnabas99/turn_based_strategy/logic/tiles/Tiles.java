@@ -47,10 +47,10 @@ public class Tiles {
     public static void drawTile(GraphicsContext context, Drawable drawable, int x, int y) {
         Tile tile = tileMap.get(drawable.getTileName());
         context.drawImage(tileset,
-                tile.x,
-                tile.y,
-                tile.width,
-                tile.height,
+                tile.getX(),
+                tile.getY(),
+                tile.getWidth(),
+                tile.getHeight(),
                 x * TILE_WIDTH,
                 y * TILE_WIDTH,
                 TILE_WIDTH,
