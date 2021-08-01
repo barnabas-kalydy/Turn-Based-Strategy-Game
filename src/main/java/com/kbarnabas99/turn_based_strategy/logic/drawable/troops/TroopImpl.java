@@ -1,8 +1,9 @@
-package com.codecool.dungeoncrawl.logic.drawable.troops;
+package com.kbarnabas99.turn_based_strategy.logic.drawable.troops;
 
-import com.codecool.dungeoncrawl.logic.Player;
-import com.codecool.dungeoncrawl.logic.drawable.Drawable;
-import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
+
+import com.kbarnabas99.turn_based_strategy.logic.Player;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.Drawable;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 
 public abstract class TroopImpl implements Drawable, Troop {
     private final Player player;

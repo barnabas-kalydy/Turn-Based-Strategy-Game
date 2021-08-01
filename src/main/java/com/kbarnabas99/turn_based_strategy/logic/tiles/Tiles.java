@@ -1,6 +1,6 @@
-package com.codecool.dungeoncrawl.logic.tiles;
+package com.kbarnabas99.turn_based_strategy.logic.tiles;
 
-import com.codecool.dungeoncrawl.logic.drawable.Drawable;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.Drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

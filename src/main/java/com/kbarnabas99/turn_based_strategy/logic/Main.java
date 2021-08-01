@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic;
+package com.kbarnabas99.turn_based_strategy.logic;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -1,6 +1,6 @@
-package com.codecool.dungeoncrawl.logic;
+package com.kbarnabas99.turn_based_strategy.logic;
 
-import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Troop;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;

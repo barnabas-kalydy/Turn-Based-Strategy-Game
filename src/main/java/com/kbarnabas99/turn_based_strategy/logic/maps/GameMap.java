@@ -1,9 +1,9 @@
-package com.codecool.dungeoncrawl.logic.maps;
+package com.kbarnabas99.turn_based_strategy.logic.maps;
 
-import com.codecool.dungeoncrawl.logic.Player;
-import com.codecool.dungeoncrawl.logic.drawable.cells.Cell;
-import com.codecool.dungeoncrawl.logic.drawable.cells.CellType;
-import com.codecool.dungeoncrawl.logic.drawable.troops.Troop;
+import com.kbarnabas99.turn_based_strategy.logic.Player;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.CellType;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Troop;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
