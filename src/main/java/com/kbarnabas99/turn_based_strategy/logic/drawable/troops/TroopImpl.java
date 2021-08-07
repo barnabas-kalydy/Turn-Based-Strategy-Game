@@ -32,8 +32,7 @@ public abstract class TroopImpl implements Drawable, Troop {
         TroopImpl troopToAttack = cell.getNeighbor(xDirection, yDirection).getTroop();
         troopToAttack.loseHealth(this.getDmg());
         if (troopToAttack.getHealth() < 1) {
-            troopToAttack.getCell().setTroop(null);
-            troopToAttack.getPlayer().removeTroop(troopToAttack);
+            troopToAttack.removeTroop();
             return;
         }
         this.loseHealth(troopToAttack.getDmg());
@@ -58,6 +57,12 @@ public abstract class TroopImpl implements Drawable, Troop {
     @Override
     public void loseHealth(float healthToLose) {
         this.health -= healthToLose;
+    }
+
+    @Override
+    public void removeTroop() {
+        this.getCell().setTroop(null);
+        this.getPlayer().removeTroop(this);
     }
 
     @Override

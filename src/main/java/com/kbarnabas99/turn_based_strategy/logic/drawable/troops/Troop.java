@@ -23,4 +23,6 @@ public interface Troop {
     float getMaxHealth();
 
     void loseHealth(float healthToLose);
+
+    void removeTroop();
 }
