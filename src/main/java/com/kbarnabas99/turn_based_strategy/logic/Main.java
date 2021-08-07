@@ -16,14 +16,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        playMainSong();
+//        playMainSong();
 
         new GameLoop().start(primaryStage);
 
     }
 
     private void playMainSong() {
-        // FIXME: the music don't play(sometimes it plays)
         try {
             AudioInputStream audioInputStream = AudioSystem
                     .getAudioInputStream(new File("src/main/resources/music/aoe3_theme_song.wav")

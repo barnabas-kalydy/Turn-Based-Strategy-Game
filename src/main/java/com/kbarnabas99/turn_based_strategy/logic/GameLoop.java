@@ -167,7 +167,21 @@ public class GameLoop {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // redrawing every Tile
+        drawTiles();
+        drawTroops();
+
+    }
+
+    private void drawTiles() {
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                Cell cell = map.getCell(x, y);
+                Tiles.drawTile(context, cell, x, y);
+            }
+        }
+    }
+
+    private void drawTroops() {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
@@ -183,14 +197,9 @@ public class GameLoop {
                             32 * (troop.getHealth() / troop.getMaxHealth()),
                             3);
 
-                    // draw player color rectangle
+                    // player color circle
                     context.setStroke(troop.getPlayer().getColor());
-                    context.strokeRect(cell.getX() * 32,
-                            cell.getY() * 32,
-                            32,
-                            32);
-                } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    context.strokeOval(cell.getX() * 32 - 4, cell.getY() * 32 - 4, 40, 40);
                 }
             }
         }
