@@ -25,50 +25,24 @@ public class MapLoader {
                 for (int x = 0; x < mapWidth; x++) {
                     Cell cell = map.getCell(x, y);
                     switch (line[x]) {
-                        case "ground_1" -> {
-                            cell.setType(CellType.GROUND_1);
-                        }
-                        case "ground_2" -> {
-                            cell.setType(CellType.GROUND_2);
-                        }
-                        case "ground_3" -> {
-                            cell.setType(CellType.GROUND_3);
-                        }
-                        case "road_1" -> {
-                            cell.setType(CellType.ROAD_1);
-                        }
-                        case "pine_tree_1" -> {
-                            cell.setType(CellType.PINE_TREE_1);
-                        }
-                        case "pine_tree_2" -> {
-                            cell.setType(CellType.PINE_TREE_2);
-                        }
-                        case "house_1" -> {
-                            cell.setType(CellType.HOUSE_1);
-                        }
-                        case "house_2" -> {
-                            cell.setType(CellType.HOUSE_2);
-                        }
-                        case "bridge_1" -> {
-                            cell.setType(CellType.BRIDGE_1);
-                        }
-                        case "bridge_2" -> {
-                            cell.setType(CellType.BRIDGE_2);
-                        }
-                        case "water_full" -> {
-                            cell.setType(CellType.WATER_FULL);
-                        }
-                        case "water_corner" -> {
-                            cell.setType(CellType.WATER_CORNER);
-                        }
-                        case "boat_1" -> {
-                            cell.setType(CellType.BOAT_1);
-                        }
-                        case "torch_1" -> {
-                            cell.setType(CellType.TORCH_1);
-                        }
-                        case "cat" ->
-                                cell.setType(CellType.CAT);
+                        // MAP ELEMENTS
+                        case "ground_1" -> cell.setType(CellType.GROUND_1);
+                        case "ground_2" -> cell.setType(CellType.GROUND_2);
+                        case "ground_3" -> cell.setType(CellType.GROUND_3);
+                        case "road_1" -> cell.setType(CellType.ROAD_1);
+                        case "pine_tree_1" -> cell.setType(CellType.PINE_TREE_1);
+                        case "pine_tree_2" -> cell.setType(CellType.PINE_TREE_2);
+                        case "house_1" -> cell.setType(CellType.HOUSE_1);
+                        case "house_2" -> cell.setType(CellType.HOUSE_2);
+                        case "bridge_1" -> cell.setType(CellType.BRIDGE_1);
+                        case "bridge_2" -> cell.setType(CellType.BRIDGE_2);
+                        case "water_full" -> cell.setType(CellType.WATER_FULL);
+                        case "water_corner" -> cell.setType(CellType.WATER_CORNER);
+                        case "boat_1" -> cell.setType(CellType.BOAT_1);
+                        case "torch_1" -> cell.setType(CellType.TORCH_1);
+                        case "cat" -> cell.setType(CellType.CAT);
+
+                        // TROOPS
                         case "swordsman" -> {
                             cell.setType(CellType.GROUND_1);
                             new Swordsman(cell, map.getPlayer(0));
@@ -77,9 +51,9 @@ public class MapLoader {
                             cell.setType(CellType.GROUND_1);
                             new Skeleton(cell, map.getPlayer(1));
                         }
-                        default -> {
-                            System.out.println("Cell type " + line[x] + " not found!!!");
-                        }
+
+                        // NOT FOUND ELEMENT
+                        default -> System.out.println("Cell type " + line[x] + " not found!!!");
                     }
                 }
             }
@@ -92,7 +66,6 @@ public class MapLoader {
     }
 
     private static void readMapWidthAndHeightFromCsv(int mapNumber) throws FileNotFoundException {
-
         String file = String.format("src/main/resources/maps/%d/map_%d.csv", mapNumber, mapNumber);
         String line = "";
         try (Scanner s =

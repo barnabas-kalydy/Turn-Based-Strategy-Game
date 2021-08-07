@@ -82,6 +82,7 @@ public class GameLoop {
         else
             actualTurnPlayer = map.getPlayer(0);
         map.setSelectedTroopToNull();
+        refresh();
     }
 
 
@@ -92,10 +93,12 @@ public class GameLoop {
         Cell cell = map.getCell((int) x / 32, (int) y / 32);
         TroopImpl troop = cell.getTroop();
 
-        if (troop != null)
+        if (troop != null) {
             map.setSelectedTroop(troop, actualTurnPlayer);
-        else
+        } else
             map.setSelectedTroopToNull();
+
+        refresh();
 
         TroopImpl selectedTroop = map.getSelectedTroop();
         String tileName = cell.getTileName();
@@ -139,8 +142,7 @@ public class GameLoop {
                 selectedTroop.attack(xDirection, yDirection);
                 if (selectedTroop.getHealth() < 1) {
                     logToVBox("Selected troop died!");
-                    selectedTroop.getCell().setTroop(null);
-                    selectedTroop.getPlayer().removeTroop(selectedTroop);
+                    selectedTroop.removeTroop();
                     map.setSelectedTroopToNull();
                 }
             }
@@ -197,8 +199,17 @@ public class GameLoop {
                             32 * (troop.getHealth() / troop.getMaxHealth()),
                             3);
 
-                    // player color circle
+                    // Draw player color circle
+                    if (cell.getTroop().equals(map.getSelectedTroop())) {
+                        // selected troop
+                        context.setStroke(Color.WHITE);
+                        context.setLineWidth(3);
+                        context.strokeOval(cell.getX() * 32 - 3, cell.getY() * 32 - 3, 38, 38);
+                    }
+
+                    // not selected troop
                     context.setStroke(troop.getPlayer().getColor());
+                    context.setLineWidth(2);
                     context.strokeOval(cell.getX() * 32 - 4, cell.getY() * 32 - 4, 40, 40);
                 }
             }
