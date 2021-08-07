@@ -9,15 +9,19 @@ import java.util.Map;
 
 public class Tiles {
     private static final Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
-
-    public static int TILE_WIDTH = 32; // in pixels
     private static final Map<String, Tile> tileMap = new HashMap<>();
+    // TODO EXPORT THIS
+    // TODO DOWNLOAD JAVAFX TO SEE VARIABLE NAMES IN DEFAULT METHODS!!!
+    public static int TILE_WIDTH = 32; // in pixels
 
     // initialize Tile types with names
     static {
         // map elements
         tileMap.put("empty", new Tile(0));
         tileMap.put("ground_1", new Tile(2));
+        tileMap.put("ground_2", new Tile(3));
+        tileMap.put("ground_3", new Tile(4));
+        tileMap.put("road_1", new Tile(16));
         tileMap.put("pine_tree_1", new Tile(32));
         tileMap.put("pine_tree_2", new Tile(67));
         tileMap.put("house_1", new Tile(644));
@@ -42,8 +46,8 @@ public class Tiles {
      *
      * @param context  to draw the tile on
      * @param drawable the Drawable object to draw to the GraphicsContext
-     * @param x        the x coordinate of the GraphicsContext
-     * @param y        the y coordinate of the GraphicsContext
+     * @param x        the x coordinate of the GraphicsContext to start the tile from
+     * @param y        the y coordinate of the GraphicsContext to start the tile from
      */
     public static void drawTile(GraphicsContext context, Drawable drawable, int x, int y) {
         Tile tile = tileMap.get(drawable.getTileName());

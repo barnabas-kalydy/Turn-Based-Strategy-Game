@@ -4,6 +4,9 @@ public enum CellType {
 
     EMPTY("empty"),
     GROUND_1("ground_1"),
+    GROUND_2("ground_2"),
+    GROUND_3("ground_3"),
+    ROAD_1("road_1"),
     PINE_TREE_1("pine_tree_1"),
     PINE_TREE_2("pine_tree_2"),
     HOUSE_1("house_1"),

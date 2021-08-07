@@ -10,11 +10,16 @@
   <properties>
    <property name="name" value="ground_2"/>
   </properties>
-  <animation>
-   <frame tileid="647" duration="10000"/>
-   <frame tileid="611" duration="10000"/>
-   <frame tileid="742" duration="10000"/>
-  </animation>
+ </tile>
+ <tile id="4">
+  <properties>
+   <property name="name" value="ground_3"/>
+  </properties>
+ </tile>
+ <tile id="16">
+  <properties>
+   <property name="name" value="road_1"/>
+  </properties>
  </tile>
  <tile id="26">
   <properties>

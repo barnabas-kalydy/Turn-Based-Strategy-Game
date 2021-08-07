@@ -26,7 +26,7 @@ import java.util.List;
 public class GameLoop {
 
     // todo export this somewhere else
-    final List<String> movableCellTypes = Arrays.asList("ground_1", "bridge_1");
+    final List<String> movableCellTypes = Arrays.asList("ground_1", "ground_2", "ground_3", "bridge_1", "bridge_2", "road_1");
 
     Player actualTurnPlayer;
     GameMap map = MapLoader.loadMapFromCsv(1);

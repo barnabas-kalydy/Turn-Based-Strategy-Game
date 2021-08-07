@@ -28,6 +28,15 @@ public class MapLoader {
                         case "ground_1" -> {
                             cell.setType(CellType.GROUND_1);
                         }
+                        case "ground_2" -> {
+                            cell.setType(CellType.GROUND_2);
+                        }
+                        case "ground_3" -> {
+                            cell.setType(CellType.GROUND_3);
+                        }
+                        case "road_1" -> {
+                            cell.setType(CellType.ROAD_1);
+                        }
                         case "pine_tree_1" -> {
                             cell.setType(CellType.PINE_TREE_1);
                         }
