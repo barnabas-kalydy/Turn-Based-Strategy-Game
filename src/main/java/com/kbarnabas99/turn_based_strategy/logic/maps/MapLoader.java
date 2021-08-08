@@ -58,7 +58,7 @@ public class MapLoader {
                         case "city_1" -> new City(cell);
 
                         // NOT FOUND ELEMENT
-                        default -> System.out.println("Cell type " + line[x] + " not found!!!");
+                        default -> LOGGER.warning("Cell type " + line[x] + " not found!!!");
                     }
                 }
             }
@@ -81,7 +81,7 @@ public class MapLoader {
             }
             mapWidth = line.split(",").length;
         } catch (Exception e) {
-            System.out.println(e);
+            LOGGER.warning("Problem with reading width and height from map: " + file);
         }
     }
 }

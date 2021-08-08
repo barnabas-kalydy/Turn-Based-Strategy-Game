@@ -6,8 +6,8 @@ import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 
 public class City implements Drawable {
 
-    private Player owner;
     private final Cell cell;
+    private Player owner;
 
     public City(Cell cell) {
         this.cell = cell;

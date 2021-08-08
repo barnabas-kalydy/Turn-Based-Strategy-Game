@@ -7,8 +7,11 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.util.logging.Logger;
 
 public class Main extends Application {
+
+    private final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         launch(args);
@@ -19,7 +22,6 @@ public class Main extends Application {
 //        playMainSong();
 
         new GameLoop().start(primaryStage);
-
     }
 
     private void playMainSong() {
@@ -31,8 +33,7 @@ public class Main extends Application {
             clip.open(audioInputStream);
             clip.start();
         } catch (Exception e) {
-            System.out.println("Error with playing sound.");
-            e.printStackTrace();
+            LOGGER.warning("Problem playing main sound!");
         }
     }
 

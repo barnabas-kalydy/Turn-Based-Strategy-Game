@@ -32,9 +32,13 @@ public class Player {
         troops.remove(troopToRemove);
     }
 
-    public void addCity(City city) {cities.add(city); }
+    public void addCity(City city) {
+        cities.add(city);
+    }
 
-    public void removeCity(City city) {cities.remove(city); }
+    public void removeCity(City city) {
+        cities.remove(city);
+    }
 
     public javafx.scene.paint.Paint getColor() {
         return playerColor;

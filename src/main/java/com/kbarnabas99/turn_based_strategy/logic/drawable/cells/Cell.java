@@ -7,11 +7,11 @@ import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.TroopImpl;
 import com.kbarnabas99.turn_based_strategy.logic.maps.GameMap;
 
 public class Cell implements Drawable {
+    private final GameMap gameMap;
+    private final int x, y;
     private CellType type;
     private TroopImpl troopImpl;
     private City city;
-    private final GameMap gameMap;
-    private final int x, y;
 
     public Cell(GameMap gameMap, int x, int y, CellType type) {
         this.gameMap = gameMap;
