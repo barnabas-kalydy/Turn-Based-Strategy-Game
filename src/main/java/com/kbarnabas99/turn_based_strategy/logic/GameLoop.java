@@ -19,27 +19,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class GameLoop {
 
     // todo export this somewhere else
-    final List<String> movableCellTypes = Arrays.asList("ground_1", "ground_2", "ground_3", "bridge_1", "bridge_2", "road_1");
+    private final List<String> MOVABLE_CELL_TYPES = Arrays.asList("ground_1", "ground_2", "ground_3", "bridge_1", "bridge_2", "road_1");
 
-    Player actualTurnPlayer;
-    GameMap map = MapLoader.loadMapFromCsv(1);
+    private final GameMap GAMEMAP = MapLoader.loadMapFromCsv(2);
+    private final double SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    private final double SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    private final int CELLS_NUMBER_HORIZONTALLY = (int) (SCREEN_WIDTH / 32);
+    private final int CELLS_NUMBER_VERTICALLY = (int) (SCREEN_HEIGHT / 32);
 
     // Variables needed for graphical things
-    Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+    Canvas canvas = new Canvas(SCREEN_WIDTH,
+            SCREEN_HEIGHT - 95);
     GraphicsContext context = canvas.getGraphicsContext2D();
     HBox downButtonsBox;
     ScrollPane scroll;
     BorderPane borderPane;
     Scene scene;
-
+    private Player actualTurnPlayer;
 
     public void start(Stage primaryStage) {
         // Setup graphical user interface
@@ -50,7 +53,7 @@ public class GameLoop {
         setupEventListeners();
 
         // Set first turn player
-        actualTurnPlayer = map.getPlayer(0);
+        actualTurnPlayer = GAMEMAP.getPlayer(0);
 
         refreshScreen();
     }
@@ -83,11 +86,11 @@ public class GameLoop {
     }
 
     private void passTurn(MouseEvent mouseEvent) {
-        if (actualTurnPlayer.equals(map.getPlayer(0)))
-            actualTurnPlayer = map.getPlayer(1);
+        if (actualTurnPlayer.equals(GAMEMAP.getPlayer(0)))
+            actualTurnPlayer = GAMEMAP.getPlayer(1);
         else
-            actualTurnPlayer = map.getPlayer(0);
-        map.setSelectedTroopToNull();
+            actualTurnPlayer = GAMEMAP.getPlayer(0);
+        GAMEMAP.setSelectedTroopToNull();
         refreshScreen();
     }
 
@@ -95,15 +98,15 @@ public class GameLoop {
     private void setMouseClickEventOnMainScreen(MouseEvent mouseEvent) {
         // getting data about the place where mouse click occurred
         double x = mouseEvent.getX(), y = mouseEvent.getY();
-        Cell cell = map.getCell((int) x / 32, (int) y / 32);
+        Cell cell = GAMEMAP.getCell((int) x / 32, (int) y / 32);
         TroopImpl troop = cell.getTroop();
         City city = cell.getCity();
 
         // Set selected troop if possible
         if (troop != null) {
-            map.setSelectedTroop(troop, actualTurnPlayer);
+            selectTroop(troop);
         } else
-            map.setSelectedTroopToNull();
+            GAMEMAP.setSelectedTroopToNull();
 
         // todo Open city menu
         if (city != null) {
@@ -113,8 +116,12 @@ public class GameLoop {
         refreshScreen();
     }
 
+    private void selectTroop(TroopImpl troop) {
+        GAMEMAP.setSelectedTroop(troop, actualTurnPlayer);
+    }
+
     private void setKeyEvents(KeyEvent keyEvent) {
-        TroopImpl selectedTroop = map.getSelectedTroop();
+        TroopImpl selectedTroop = GAMEMAP.getSelectedTroop();
         if (selectedTroop != null) {
             int xDirection = 0, yDirection = 0;
             // set direction
@@ -143,7 +150,7 @@ public class GameLoop {
                 // If selected troop dies
                 if (selectedTroop.getHealth() < 1) {
                     selectedTroop.removeTroop();
-                    map.setSelectedTroopToNull();
+                    GAMEMAP.setSelectedTroopToNull();
                 }
             } else if (canConquer(selectedTroop, xDirection, yDirection)) {
                 selectedTroop.conquerCity(xDirection, yDirection, selectedTroop.getPlayer());
@@ -154,7 +161,7 @@ public class GameLoop {
 
     private boolean freeToMove(TroopImpl selectedTroop, int xDirection, int yDirection) {
         return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop() == null
-                && movableCellTypes.contains(selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName());
+                && MOVABLE_CELL_TYPES.contains(selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName());
     }
 
     private boolean canConquer(TroopImpl selectedTroop, int xDirection, int yDirection) {
@@ -174,7 +181,7 @@ public class GameLoop {
     private void refreshScreen() {
         // filling screen with black
         context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // Redraw ground, cities and troops
         drawTiles();
@@ -184,18 +191,18 @@ public class GameLoop {
     }
 
     private void drawTiles() {
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
+        for (int x = 0; x < (0 + CELLS_NUMBER_HORIZONTALLY); x++) {
+            for (int y = 0; y < (0 + CELLS_NUMBER_VERTICALLY); y++) {
+                Cell cell = GAMEMAP.getCell(x, y);
                 Tiles.drawTile(context, cell, x, y);
             }
         }
     }
 
     private void drawCities() {
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
+        for (int x = 0; x < (0 + CELLS_NUMBER_HORIZONTALLY); x++) {
+            for (int y = 0; y < (0 + CELLS_NUMBER_VERTICALLY); y++) {
+                Cell cell = GAMEMAP.getCell(x, y);
                 City city = cell.getCity();
                 if (city != null) {
                     // Draw city to map
@@ -213,9 +220,9 @@ public class GameLoop {
     }
 
     private void drawTroops() {
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
+        for (int x = 0; x < (0 + CELLS_NUMBER_HORIZONTALLY); x++) {
+            for (int y = 0; y < (0 + CELLS_NUMBER_VERTICALLY); y++) {
+                Cell cell = GAMEMAP.getCell(x, y);
                 if (cell.getTroop() != null) {
                     // Draw troop to map
                     Tiles.drawTile(context, cell.getTroop(), x, y);
@@ -229,7 +236,7 @@ public class GameLoop {
                             3);
 
                     // Draw white circle around selected troop
-                    if (cell.getTroop().equals(map.getSelectedTroop())) {
+                    if (cell.getTroop().equals(GAMEMAP.getSelectedTroop())) {
                         context.setStroke(Color.WHITE);
                         context.setLineWidth(3);
                         context.strokeOval(cell.getX() * 32 - 3, cell.getY() * 32 - 3, 38, 38);
