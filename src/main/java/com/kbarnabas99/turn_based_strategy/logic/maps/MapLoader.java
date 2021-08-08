@@ -58,13 +58,13 @@ public class MapLoader {
                         case "city_1" -> new City(cell);
 
                         // NOT FOUND ELEMENT
-                        default -> LOGGER.warning("Cell type " + line[x] + " not found!!!");
+                        default -> LOGGER.warning("Cell type " + line[x] + " not found!");
                     }
                 }
             }
             sc.close();
         } catch (FileNotFoundException e) {
-            LOGGER.warning("File not found");
+            LOGGER.warning("File not found!");
             map = new GameMap(-1, -1, CellType.EMPTY);
         }
         return map;
