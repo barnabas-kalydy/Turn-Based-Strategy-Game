@@ -1,6 +1,7 @@
 package com.kbarnabas99.turn_based_strategy.logic;
 
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cities.City;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Troop;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.TroopImpl;
 import com.kbarnabas99.turn_based_strategy.logic.maps.GameMap;
@@ -31,49 +32,56 @@ public class GameLoop {
     Player actualTurnPlayer;
     GameMap map = MapLoader.loadMapFromCsv(1);
 
+    // Variables needed for graphical things
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
-    VBox rightLogBox;
+    HBox downButtonsBox;
+    ScrollPane scroll;
+    BorderPane borderPane;
+    Scene scene;
+
 
     public void start(Stage primaryStage) {
+        // Setup graphical user interface
+        setupDownButtonsBox();
+        setupBorderPane();
+        setScene(primaryStage);
 
+        setupEventListeners();
+
+        // Set first turn player
+        actualTurnPlayer = map.getPlayer(0);
+
+        refreshScreen();
+    }
+
+    private void setupEventListeners() {
         canvas.setOnMouseClicked(this::setMouseClickEventOnMainScreen);
+        borderPane.setOnKeyPressed(this::setKeyEvents);
+    }
 
+    private void setupDownButtonsBox() {
         Button passTurnButton = new Button("Pass Turn!");
         passTurnButton.setPrefSize(100, 20);
         passTurnButton.setOnMouseClicked(this::passTurn);
 
-        Button clearLogBoxButton = new Button("Clear Right Log Box!");
-        clearLogBoxButton.setPrefSize(200, 20);
-        clearLogBoxButton.setOnMouseClicked(this::clearVBoxEvent);
+        downButtonsBox = new HBox();
+        downButtonsBox.getChildren().add(passTurnButton);
+    }
 
-        HBox hbox = new HBox();
-        hbox.getChildren().add(passTurnButton);
-        hbox.getChildren().add(clearLogBoxButton);
-
-        rightLogBox = new VBox();
-        rightLogBox.getChildren().add(new Hyperlink("Log output: "));
-
-        ScrollPane scroll = new ScrollPane();
-        scroll.setMinWidth(500);
-        scroll.setContent(rightLogBox);
-
-        BorderPane borderPane = new BorderPane();
-        borderPane.setOnKeyPressed(this::setKeyEvents);
+    private void setupBorderPane() {
+        borderPane = new BorderPane();
         borderPane.setCenter(canvas);
-        borderPane.setBottom(hbox);
+        borderPane.setBottom(downButtonsBox);
         borderPane.setRight(scroll);
+    }
 
-        Scene scene = new Scene(borderPane);
-
+    private void setScene(Stage primaryStage) {
+        scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        actualTurnPlayer = map.getPlayer(0);
-
-        refresh();
     }
 
     private void passTurn(MouseEvent mouseEvent) {
@@ -82,40 +90,34 @@ public class GameLoop {
         else
             actualTurnPlayer = map.getPlayer(0);
         map.setSelectedTroopToNull();
-        refresh();
+        refreshScreen();
     }
 
 
     private void setMouseClickEventOnMainScreen(MouseEvent mouseEvent) {
-        // getting data about the place where mouse click occured
+        // getting data about the place where mouse click occurred
         double x = mouseEvent.getX(), y = mouseEvent.getY();
-
         Cell cell = map.getCell((int) x / 32, (int) y / 32);
         TroopImpl troop = cell.getTroop();
+        City city = cell.getCity();
 
+        // Set selected troop if possible
         if (troop != null) {
             map.setSelectedTroop(troop, actualTurnPlayer);
         } else
             map.setSelectedTroopToNull();
 
-        refresh();
+        // todo Open city menu
+        if (city != null) {
 
-        TroopImpl selectedTroop = map.getSelectedTroop();
-        String tileName = cell.getTileName();
+        }
 
-        // logging to vbox
-        clearVBox();
-        logToVBox("\n");
-        logToVBox("Troop: " + (troop == null ? "null" : troop.toString()));
-        logToVBox("Tile name: " + tileName);
-        logToVBox("Actual round player: " + actualTurnPlayer);
-        logToVBox("Selected troop: " + (selectedTroop == null ? "null" : selectedTroop.toString()));
+        refreshScreen();
     }
 
     private void setKeyEvents(KeyEvent keyEvent) {
         TroopImpl selectedTroop = map.getSelectedTroop();
         if (selectedTroop != null) {
-            // 0, 0 -> not move
             int xDirection = 0, yDirection = 0;
             // set direction
             switch (keyEvent.getCode()) {
@@ -140,22 +142,29 @@ public class GameLoop {
                 selectedTroop.move(xDirection, yDirection);
             else if (canAttack(selectedTroop, xDirection, yDirection)) {
                 selectedTroop.attack(xDirection, yDirection);
+                // If selected troop dies
                 if (selectedTroop.getHealth() < 1) {
-                    logToVBox("Selected troop died!");
                     selectedTroop.removeTroop();
                     map.setSelectedTroopToNull();
                 }
+            } else if (canConquer(selectedTroop, xDirection, yDirection)) {
+                selectedTroop.conquerCity(xDirection, yDirection, selectedTroop.getPlayer());
             }
-            refresh();
+            refreshScreen();
         }
     }
 
-    private boolean freeToMove(Troop selectedTroop, int xDirection, int yDirection) {
+    private boolean freeToMove(TroopImpl selectedTroop, int xDirection, int yDirection) {
         return selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop() == null
                 && movableCellTypes.contains(selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTileName());
     }
 
-    private boolean canAttack(Troop selectedTroop, int xDirection, int yDirection) {
+    private boolean canConquer(TroopImpl selectedTroop, int xDirection, int yDirection) {
+        City cityToConquer = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getCity();
+        return cityToConquer != null;
+    }
+
+    private boolean canAttack(TroopImpl selectedTroop, int xDirection, int yDirection) {
         Troop troopToAttack = selectedTroop.getCell().getNeighbor(xDirection, yDirection).getTroop();
         if (troopToAttack != null) {
             if (!troopToAttack.getPlayer().equals(selectedTroop.getPlayer()))
@@ -164,12 +173,14 @@ public class GameLoop {
         return false;
     }
 
-    private void refresh() {
+    private void refreshScreen() {
         // filling screen with black
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+        // Redraw ground, cities and troops
         drawTiles();
+        drawCities();
         drawTroops();
 
     }
@@ -183,15 +194,35 @@ public class GameLoop {
         }
     }
 
+    private void drawCities() {
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                Cell cell = map.getCell(x, y);
+                City city = cell.getCity();
+                if (city != null) {
+                    // Draw city to map
+                    Tiles.drawTile(context, city, x, y);
+
+                    if (city.getPlayer() != null) {
+                        // Draw player color around city
+                        context.setStroke(city.getPlayer().getColor());
+                        context.setLineWidth(2);
+                        context.strokeOval(cell.getX() * 32 - 4, cell.getY() * 32 - 4, 40, 40);
+                    }
+                }
+            }
+        }
+    }
+
     private void drawTroops() {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 Cell cell = map.getCell(x, y);
                 if (cell.getTroop() != null) {
-                    // draw troop to map
+                    // Draw troop to map
                     Tiles.drawTile(context, cell.getTroop(), x, y);
 
-                    // draw health bar under the troop
+                    // Draw health bar under the troop
                     Troop troop = cell.getTroop();
                     context.setFill(Color.GREEN);
                     context.fillRect(cell.getX() * 32,
@@ -199,15 +230,14 @@ public class GameLoop {
                             32 * (troop.getHealth() / troop.getMaxHealth()),
                             3);
 
-                    // Draw player color circle
+                    // Draw white circle around selected troop
                     if (cell.getTroop().equals(map.getSelectedTroop())) {
-                        // selected troop
                         context.setStroke(Color.WHITE);
                         context.setLineWidth(3);
                         context.strokeOval(cell.getX() * 32 - 3, cell.getY() * 32 - 3, 38, 38);
                     }
 
-                    // not selected troop
+                    // Draw player color circle around troop
                     context.setStroke(troop.getPlayer().getColor());
                     context.setLineWidth(2);
                     context.strokeOval(cell.getX() * 32 - 4, cell.getY() * 32 - 4, 40, 40);
@@ -215,18 +245,4 @@ public class GameLoop {
             }
         }
     }
-
-    public void logToVBox(String log) {
-        rightLogBox.getChildren().add(new Hyperlink(log));
-    }
-
-    public void clearVBoxEvent(MouseEvent event) {
-        clearVBox();
-    }
-
-    public void clearVBox() {
-        rightLogBox.getChildren().clear();
-    }
-
-
 }

@@ -16,7 +16,7 @@ public class Tiles {
 
     // initialize Tile types with names
     static {
-        // map elements
+        // Map elements
         tileMap.put("empty", new Tile(0));
         tileMap.put("ground_1", new Tile(2));
         tileMap.put("ground_2", new Tile(3));
@@ -24,14 +24,16 @@ public class Tiles {
         tileMap.put("road_1", new Tile(16));
         tileMap.put("pine_tree_1", new Tile(32));
         tileMap.put("pine_tree_2", new Tile(67));
-        tileMap.put("house_1", new Tile(644));
-        tileMap.put("house_2", new Tile(672));
         tileMap.put("bridge_1", new Tile(176));
         tileMap.put("bridge_2", new Tile(175));
         tileMap.put("water_full", new Tile(168));
         tileMap.put("water_corner", new Tile(170));
         tileMap.put("boat_1", new Tile(619));
         tileMap.put("torch_1", new Tile(484));
+
+        // CITIES
+        tileMap.put("city_1", new Tile(644));
+        tileMap.put("city_2", new Tile(672));
 
         // troops/entities/animals
         tileMap.put("swordsman", new Tile(28));

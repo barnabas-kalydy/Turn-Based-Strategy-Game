@@ -9,8 +9,6 @@ public enum CellType {
     ROAD_1("road_1"),
     PINE_TREE_1("pine_tree_1"),
     PINE_TREE_2("pine_tree_2"),
-    HOUSE_1("house_1"),
-    HOUSE_2("house_2"),
     BRIDGE_1("bridge_1"),
     BRIDGE_2("bridge_2"),
     WATER_FULL("water_full"),

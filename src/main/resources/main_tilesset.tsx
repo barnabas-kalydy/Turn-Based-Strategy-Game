@@ -108,12 +108,12 @@
  </tile>
  <tile id="644">
   <properties>
-   <property name="name" value="house_1"/>
+   <property name="name" value="city_1"/>
   </properties>
  </tile>
  <tile id="672">
   <properties>
-   <property name="name" value="house_2"/>
+   <property name="name" value="city_2"/>
   </properties>
  </tile>
  <wangsets>

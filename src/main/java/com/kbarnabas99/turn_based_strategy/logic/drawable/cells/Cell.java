@@ -2,12 +2,14 @@ package com.kbarnabas99.turn_based_strategy.logic.drawable.cells;
 
 
 import com.kbarnabas99.turn_based_strategy.logic.drawable.Drawable;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cities.City;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.TroopImpl;
 import com.kbarnabas99.turn_based_strategy.logic.maps.GameMap;
 
 public class Cell implements Drawable {
     private CellType type;
     private TroopImpl troopImpl;
+    private City city;
     private final GameMap gameMap;
     private final int x, y;
 
@@ -16,6 +18,7 @@ public class Cell implements Drawable {
         this.x = x;
         this.y = y;
         this.type = type;
+        city = null;
     }
 
     public CellType getCellType() {
@@ -49,5 +52,13 @@ public class Cell implements Drawable {
 
     public int getY() {
         return y;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

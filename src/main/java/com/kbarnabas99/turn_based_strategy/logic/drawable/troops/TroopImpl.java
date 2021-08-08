@@ -4,6 +4,7 @@ package com.kbarnabas99.turn_based_strategy.logic.drawable.troops;
 import com.kbarnabas99.turn_based_strategy.logic.Player;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.Drawable;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cities.City;
 
 public abstract class TroopImpl implements Drawable, Troop {
     private final Player player;
@@ -36,6 +37,13 @@ public abstract class TroopImpl implements Drawable, Troop {
             return;
         }
         this.loseHealth(troopToAttack.getDmg());
+    }
+
+    @Override
+    public void conquerCity(int xDirection, int yDirection, Player playerToConquerCity) {
+        City cityToConquer = this.getCell().getNeighbor(xDirection, yDirection).getCity();
+        this.getPlayer().addCity(cityToConquer);
+        cityToConquer.setPlayer(playerToConquerCity);
     }
 
 

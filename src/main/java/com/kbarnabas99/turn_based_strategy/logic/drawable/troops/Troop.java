@@ -2,6 +2,7 @@ package com.kbarnabas99.turn_based_strategy.logic.drawable.troops;
 
 import com.kbarnabas99.turn_based_strategy.logic.Player;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cities.City;
 
 public interface Troop {
     Player getPlayer();
@@ -11,6 +12,8 @@ public interface Troop {
     void move(int dx, int dy);
 
     void attack(int xDirection, int yDirection);
+
+    void conquerCity(int xDirection, int yDirection, Player playerToConquerCity);
 
     float getDmg();
 

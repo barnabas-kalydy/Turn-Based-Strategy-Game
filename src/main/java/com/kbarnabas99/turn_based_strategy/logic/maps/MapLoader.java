@@ -2,14 +2,18 @@ package com.kbarnabas99.turn_based_strategy.logic.maps;
 
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.Cell;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.cells.CellType;
+import com.kbarnabas99.turn_based_strategy.logic.drawable.cities.City;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Skeleton;
 import com.kbarnabas99.turn_based_strategy.logic.drawable.troops.Swordsman;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class MapLoader {
+
+    private final static Logger LOGGER = Logger.getLogger(MapLoader.class.getName());
 
     static int mapWidth = 0, mapHeight = 0;
 
@@ -32,8 +36,6 @@ public class MapLoader {
                         case "road_1" -> cell.setType(CellType.ROAD_1);
                         case "pine_tree_1" -> cell.setType(CellType.PINE_TREE_1);
                         case "pine_tree_2" -> cell.setType(CellType.PINE_TREE_2);
-                        case "house_1" -> cell.setType(CellType.HOUSE_1);
-                        case "house_2" -> cell.setType(CellType.HOUSE_2);
                         case "bridge_1" -> cell.setType(CellType.BRIDGE_1);
                         case "bridge_2" -> cell.setType(CellType.BRIDGE_2);
                         case "water_full" -> cell.setType(CellType.WATER_FULL);
@@ -52,6 +54,9 @@ public class MapLoader {
                             new Skeleton(cell, map.getPlayer(1));
                         }
 
+                        // CITIES
+                        case "city_1" -> new City(cell);
+
                         // NOT FOUND ELEMENT
                         default -> System.out.println("Cell type " + line[x] + " not found!!!");
                     }
@@ -59,7 +64,7 @@ public class MapLoader {
             }
             sc.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.warning("File not found");
             map = new GameMap(-1, -1, CellType.EMPTY);
         }
         return map;
