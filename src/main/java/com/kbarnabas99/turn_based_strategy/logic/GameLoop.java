@@ -123,7 +123,6 @@ public class GameLoop {
         if (city != null) {
 
         }
-
         refreshScreen();
     }
 
